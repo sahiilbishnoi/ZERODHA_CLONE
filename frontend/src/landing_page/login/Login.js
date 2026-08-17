@@ -1,27 +1,26 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./Auth.css";
+import "./auth.css";
 
-const Signup = () => {
-  const [username, setUsername] = useState("");
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSignup = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError("");
     setLoading(true);
     try {
       await axios.post(
-        "http://localhost:3002/signup",
-        { username, email, password },
+        "http://localhost:3002/login",
+        { email, password },
         { withCredentials: true }
       );
-      window.location.href = "/login";
+      window.location.href = "http://localhost:3000/";
     } catch (err) {
-      setError(err.response?.data?.message || "Signup failed");
+      setError(err.response?.data?.message || "Login failed");
     } finally {
       setLoading(false);
     }
@@ -35,24 +34,12 @@ const Signup = () => {
           <span className="brand-name">Kite</span>
         </div>
 
-        <h1 className="auth-title mb-1">Create an account</h1>
-        <p className="auth-subtitle mb-4">Start investing in minutes</p>
+        <h1 className="auth-title mb-1">Login</h1>
+        <p className="auth-subtitle mb-4">Welcome back, please enter your details</p>
 
         {error && <div className="auth-error mb-3">{error}</div>}
 
-        <form onSubmit={handleSignup}>
-          <div className="mb-3">
-            <label className="form-label auth-label">Username</label>
-            <input
-              type="text"
-              className="form-control auth-input"
-              placeholder="e.g. rahul_k"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-            />
-          </div>
-
+        <form onSubmit={handleLogin}>
           <div className="mb-3">
             <label className="form-label auth-label">Email</label>
             <input
@@ -65,30 +52,35 @@ const Signup = () => {
             />
           </div>
 
-          <div className="mb-4">
+          <div className="mb-2">
             <label className="form-label auth-label">Password</label>
             <input
               type="password"
               className="form-control auth-input"
-              placeholder="At least 8 characters"
+              placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={8}
             />
           </div>
 
+          <div className="text-end mb-4">
+            <a href="/forgot-password" className="auth-link-small">
+              Forgot password?
+            </a>
+          </div>
+
           <button type="submit" className="btn auth-submit w-100" disabled={loading}>
-            {loading ? "Creating account..." : "Sign up"}
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 
         <p className="auth-footer mt-4 mb-0">
-          Already have an account? <a href="/login">Log in</a>
+          Don't have an account? <a href="/signup">Sign up</a>
         </p>
       </div>
     </div>
   );
 };
 
-export default Signup;
+export default Login;

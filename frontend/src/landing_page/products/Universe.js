@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 function Universe() {
   return (
     <div className="container mt-5">
@@ -34,12 +34,9 @@ function Universe() {
           <img src="media/images/dittoLogo.png"   className="img-fluid partner-logo"/>
           <p className="text-small text-muted">Insurance</p>
         </div>
-        <button
-          className="p-2 btn btn-primary fs-5 mb-5"
-          style={{ width: "20%", margin: "0 auto" }}
-        >
-          Signup Now
-        </button>
+       <Link to="/signup" className="btn btn-primary fs-5 mb-5 p-2 d-block text-center" style={{ width: "20%", margin: "0 auto" }}>
+  Sign up Now
+</Link>
       </div>
     </div>
   );
